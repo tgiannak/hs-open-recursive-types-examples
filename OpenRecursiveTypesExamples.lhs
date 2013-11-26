@@ -1,7 +1,7 @@
-Open Recursive Data Types Examples
-==================================
+Open Recursive Types Examples
+=============================
 
-This is a short example about how to use open recursive type definitions to
+These are short examples about how to use open recursive type definitions to
 abstract the recursion out of data types, written up as a refresher for myself.
 The technique comes in useful when one has a recursive data type that either
 requires annotation or that has many recursive cases where defining the
