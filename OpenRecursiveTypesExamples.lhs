@@ -10,8 +10,8 @@ recursive functions would be tedious.
 First we set up the machinery necessary to do all of the work, then we show
 some examples to make it clear.
 
-Though DeriveFunctor is not necessary, it saves the tedium of writing the
-obvious Functor declarations for our data types.
+Though `DeriveFunctor` is not necessary, it saves the tedium of writing the
+obvious `Functor` declarations for our data types.
 
 > {-# LANGUAGE DeriveFunctor #-}
 > module OpenRecursiveTypesExamples where
@@ -43,7 +43,7 @@ Closing the type definition with Fix
 
 In order to close the recursive type, we could write
 
-````.haskell
+````haskell
 newtype Formula = FixedFormula (FormulaF Formula)
 ````
 
@@ -88,7 +88,7 @@ This is the magic: we also pull the recursive part of our function definitions
 into a reusable definition. For details:
 http://www.haskell.org/haskellwiki/Catamorphisms
 
-Think of it this way: the functor definition encodes the recursion already, so
+Think of it this way: the `Functor` definition encodes the recursion already, so
 `cata` just makes use of that information via `fmap`. In other words, use `out`
 to pull the real structure out of the `Fix` constructor, `fmap` down the
 structure to handle the recursion, and then apply `g` at the top to finish it
@@ -144,7 +144,7 @@ Alternative eval
 ----------------
 
 If we want to be more concise, we can write the definition like this, but this
-style doesn't work if you have to modify the environment when evaluating, like
+style doesn't work if we have to modify the environment when evaluating, like
 we would for First Order Logic.
 
 > eval2 :: Env -> Formula -> Bool
@@ -179,6 +179,17 @@ Also, since we have the newtype, we also need to explicitly say that we can
 > newtype Compose g f a = Comp { unComp :: g (f a) }
 >     deriving (Functor)
 
+If you have the TypeOperators extension turned on, then the following
+definition is usually nicer to read:
+
+````haskell
+newtype (g :. f) a = Comp { unComp :: g (f a) }
+    deriving (Functor)
+````
+
+Since with that the open types can be written as `LocAnnF :. FormulaF`, which
+looks like how we compose values `g . f`. This is especially useful if there is
+a long chain of annotations that need to be added to a recursive type.
 
 We can fix the composition of the open annotation and the open formula types to
 get a closed, annotated formula type.
@@ -243,4 +254,5 @@ Also, we can project away the annotations rather easily.
 > forgetLocs' :: LocAnnF (FormulaF Formula) -> Formula
 > forgetLocs' (LocAnnF loc fmla) = In fmla
 
+> forgetLocs :: LocFormula -> Formula
 > forgetLocs = cata (forgetLocs' . unComp)
