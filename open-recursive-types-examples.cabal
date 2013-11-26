@@ -1,0 +1,18 @@
+name:                open-recursive-types
+version:             0.8.0.0
+synopsis:            Examples of how to use open data types.
+description:         Examples of how ot use open data types, including how to
+                     close types with Fix, how to abstract out recursion, and
+                     how to add annotations to recursive datatypes.
+license:             BSD3
+license-file:        LICENSE
+author:              Theophilos Giannakopoulos
+maintainer:          tgiannak@alum.wpi.edu
+category:            Examples
+build-type:          Simple
+cabal-version:       >=1.10
+
+library
+  exposed-modules:     OpenRecursiveTypesExamples
+  build-depends:       base >=4.6 && <4.7
+  default-language:    Haskell2010
