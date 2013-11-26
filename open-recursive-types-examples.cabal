@@ -1,4 +1,4 @@
-name:                open-recursive-types
+name:                open-recursive-types-examples
 version:             0.8.0.0
 synopsis:            Examples of how to use open data types.
 description:         Examples of how ot use open data types, including how to
